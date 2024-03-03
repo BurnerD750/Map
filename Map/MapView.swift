@@ -10,6 +10,7 @@ import MapKit
 
 struct MapView: UIViewRepresentable {
     let searchKey: String
+    let mapType: MKMapType
     
     func makeUIView(context: Context) -> MKMapView {
         return MKMapView()
@@ -17,6 +18,7 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         print(searchKey)
+        uiView.mapType = mapType
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(
@@ -36,8 +38,8 @@ struct MapView: UIViewRepresentable {
                     uiView.addAnnotation(pin)
                     uiView.region = MKCoordinateRegion(
                         center: targetCoordinate,
-                        latitudinalMeters: 500.0,
-                        longitudinalMeters: 500.0)
+                        latitudinalMeters: 1000.0,
+                        longitudinalMeters: 1000.0)
                 }
             })
     }
@@ -45,6 +47,6 @@ struct MapView: UIViewRepresentable {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(searchKey: "東京都港区芝公園４丁目２−８")
+        MapView(searchKey: "東京都港区芝公園４丁目２−８", mapType: .standard)
     }
 }
